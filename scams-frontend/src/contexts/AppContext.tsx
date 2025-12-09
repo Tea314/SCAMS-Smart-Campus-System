@@ -18,6 +18,7 @@ import {
   exportUtilizationCSV
 } from "../utils/exportUtils";
 import { safeStorage } from "../utils/safeStorage";
+import { useNavigate } from "react-router-dom";
 
 type AppContextType = {
   // States
@@ -95,7 +96,19 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   // Tất cả useState từ file gốc
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    const storedUser = safeStorage.getItem('user');
+    if (storedUser) {
+      try {
+        return JSON.parse(storedUser);
+      } catch (error) {
+        console.error('Error parsing stored user:', error);
+        safeStorage.removeItem('user'); // Clean up invalid data
+        return null;
+      }
+    }
+    return null;
+  });
 
   // Data state
   const [rooms, setRooms] = useState<Room[]>(mockRooms);
@@ -180,6 +193,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       status: "active",
     };
     setUser(mockUser);
+    safeStorage.setItem('user', JSON.stringify(mockUser));
     toast.success(
       `Welcome back${isAdmin ? ", Administrator" : ""}!`,
     );
@@ -187,6 +201,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const handleLogout = () => {
     setUser(null);
+    safeStorage.removeItem('user');
     toast.success("Signed out successfully");
   };
 

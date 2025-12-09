@@ -8,6 +8,7 @@ import {
   User as UserIcon,
   Building2,
   LogOut,
+  Eye,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -49,6 +50,7 @@ export function Dashboard({ user, children, currentView, onNavigate, unreadCount
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
     { id: 'browse', label: 'Browse Rooms', icon: Search },
     { id: 'bookings', label: 'My Bookings', icon: Calendar },
+    { id: 'booked-rooms-view', label: 'View All Bookings', icon: Eye },
     { id: 'notifications', label: 'Notifications', icon: Bell, badge: unreadCount },
     { id: 'profile', label: 'Profile & Settings', icon: UserIcon },
   ];
