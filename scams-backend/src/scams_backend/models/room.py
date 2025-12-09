@@ -10,7 +10,7 @@ class Room(Base):
     floor_number = Column(Integer, nullable=False)
     building_id = Column(Integer, ForeignKey("buildings.id"), nullable=False)
     capacity = Column(Integer, nullable=False)
-
+    image_url = Column(String(255), nullable=True)
     building = relationship("Building", back_populates="rooms")
     schedules = relationship("Schedule", back_populates="room")
     room_devices = relationship("RoomDevice", back_populates="room")
