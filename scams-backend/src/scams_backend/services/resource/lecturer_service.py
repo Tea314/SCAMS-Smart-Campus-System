@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from scams_backend.schemas.resource.lecturer import LecturerResponse
+from scams_backend.schemas.resource.lecturer import LecturerDetail, LecturerListResponse
 from scams_backend.models.user import User
 from scams_backend.constants.user import UserRole
 
@@ -18,6 +18,6 @@ class LecturerService:
 
     def invoke(self):
         self.get_lecturers()
-        return [
-            LecturerResponse.model_validate(lecturer) for lecturer in self.lecturers
-        ]
+        return LecturerListResponse.model_validate(
+            [LecturerDetail.model_validate(lecturer) for lecturer in self.lecturers]
+        )

@@ -1,0 +1,52 @@
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+from scams_backend.models.room import Room
+from scams_backend.models.building import Building
+from scams_backend.models.device import Device
+from scams_backend.models.room_device import RoomDevice
+from scams_backend.schemas.room.room_schema import RoomDetailResponse
+
+
+class RoomDetailService:
+    def __init__(self, room_id: int, db_session: Session):
+        self.room_id = room_id
+        self.db_session: Session = db_session
+        self.room_detail = None
+
+    def get_room_detail(self) -> None:
+        stmt = (
+            select(
+                Room.id,
+                Room.name,
+                Room.floor_number,
+                Room.capacity,
+                Building.name.label("building_name"),
+                Device.name.label("device_name"),
+            )
+            .join(Building, Room.building_id == Building.id)
+            .join(RoomDevice, Room.id == RoomDevice.room_id)
+            .join(Device, RoomDevice.device_id == Device.id)
+            .where(Room.id == self.room_id)
+        )
+        results = self.db_session.execute(stmt).all()
+
+        if not results:
+            self.room_detail = None
+            return
+
+        room_info = results[0]
+        device_names = [row.device_name for row in results]
+
+        self.room_detail = {
+            "id": room_info.id,
+            "name": room_info.name,
+            "floor_number": room_info.floor_number,
+            "capacity": room_info.capacity,
+            "building_name": room_info.building_name,
+            "devices": device_names,
+        }
+
+    def invoke(self) -> RoomDetailResponse:
+        self.get_room_detail()
+
+        return RoomDetailResponse.model_validate(self.room_detail)
