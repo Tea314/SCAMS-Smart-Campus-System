@@ -4,6 +4,8 @@ from fastapi.requests import Request
 from scams_backend.dependencies.auth import get_current_user
 from typing import Optional
 from scams_backend.schemas.room.room_schema import RoomDetailResponse, RoomListResponse
+from scams_backend.services.room.room_list_service import RoomListService
+from scams_backend.services.room.room_detail_service import RoomDetailService
 
 router = APIRouter(tags=["Rooms"])
 
@@ -25,8 +27,21 @@ async def list_rooms(
     end_time: Optional[datetime] = Query(
         None, description="End of time window (ISO format)"
     ),
+    limit: Optional[int] = Query(100, description="Limit number of results"),
+    offset: Optional[int] = Query(0, description="Offset for results"),
 ) -> RoomListResponse:
-    pass
+    room_list_service = RoomListService(
+        building_id=building_id,
+        device_ids=device_ids,
+        min_capacity=min_capacity,
+        start_time=start_time,
+        end_time=end_time,
+        limit=limit,
+        offset=offset,
+        db_session=request.state.db_session,
+    )
+    room_list = room_list_service.invoke()
+    return room_list
 
 
 @router.get(
@@ -37,4 +52,8 @@ async def get_room_detail(
     room_id: int,
     current_user=Depends(get_current_user),
 ) -> RoomDetailResponse:
-    pass
+    room_detail_service = RoomDetailService(
+        room_id=room_id, db_session=request.state.db_session
+    )
+    room_detail = room_detail_service.invoke()
+    return room_detail

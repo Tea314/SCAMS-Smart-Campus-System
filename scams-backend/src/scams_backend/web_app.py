@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from scams_backend.routers import health_router
 from scams_backend.routers import user_router
 from scams_backend.routers import resource_router
+from scams_backend.routers import room_router
 from scams_backend.middlewares.db_middleware import DBMiddleware
 
 
@@ -9,6 +10,7 @@ def initialize_routers(app: FastAPI) -> FastAPI:
     app.include_router(health_router.router)
     app.include_router(user_router.router)
     app.include_router(resource_router.router)
+    app.include_router(room_router.router)
     return app
 
 
