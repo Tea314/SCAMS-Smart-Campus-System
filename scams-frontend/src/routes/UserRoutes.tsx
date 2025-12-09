@@ -8,6 +8,7 @@ import { CreateBooking } from "../components/CreateBooking";
 import { NotificationsComponent } from "../components/Notifications";
 import { Profile } from "../components/Profile";
 import { useAppContext } from "../contexts/AppContext";
+import { BookedRoomsView } from "@/components/BookedRoomsView";
 
 export function UserRoutes() {
   const {
@@ -37,7 +38,7 @@ export function UserRoutes() {
 
   const selectedRoom = selectedRoomId ? rooms.find((r) => r.id === selectedRoomId) : null;
 
-  const handleNavigate = (view: string) => navigate(view);
+  const handleNavigate = (view: string) => navigate(`/${view}`);
 
   return (
     <Dashboard
@@ -59,7 +60,10 @@ export function UserRoutes() {
                 handleViewRoom(roomId);
                 navigate(`/room-details/${roomId}`);
               }}
-              onCreateBooking={handleCreateBooking}
+              onCreateBooking={() => {
+                handleCreateBooking();
+                navigate("/create-booking");
+              }}
               onBrowseRooms={() => navigate("/browse")}
               onViewBookings={() => navigate("/bookings")}
             />
@@ -141,6 +145,13 @@ export function UserRoutes() {
               onUpdateProfile={handleUpdateProfile}
               onChangePassword={handleChangePassword}
               onLogout={handleLogout}
+            />
+          }
+        />
+        <Route
+          path="/booked-rooms-view"
+          element={
+            <BookedRoomsView
             />
           }
         />
