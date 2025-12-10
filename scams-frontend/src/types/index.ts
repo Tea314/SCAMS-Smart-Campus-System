@@ -7,24 +7,28 @@ export interface User {
   status?: 'active' | 'inactive';
   createdAt?: string;
 }
-
-export interface Room {
-  id: string;
+export interface Device {
+  id: number;
   name: string;
-  location: string;
-  floor?: string;
-  capacity: number;
-  description: string;
-  equipment: string[];
-  image: string;
-  type?: string;
-  status?: 'available' | 'booked' | 'maintenance';
-  isFavorite?: boolean;
 }
-
+export interface Room {
+  id: number;
+  name: string;
+  image_url: string | null;
+  floor_number: number;
+  building_id: number;
+  building_name: string;
+  capacity: number;
+  devices: Device[];
+}
+export interface RoomSchedule {
+  room_id: number;
+  date: string;
+  scheduled_slots: string[];
+}
 export interface Booking {
   id: string;
-  roomId: string;
+  roomId: number;
   roomName: string;
   userId: string;
   userName?: string;
@@ -55,7 +59,7 @@ export interface TimeSlot {
 
 export interface MaintenanceSchedule {
   id: string;
-  roomId: string;
+  roomId: number;
   roomName: string;
   startDate: string;
   endDate: string;
