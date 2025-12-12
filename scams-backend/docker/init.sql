@@ -8,10 +8,10 @@ INSERT INTO users (full_name, role, email, hashed_password) VALUES
 ('Tran Van Bob', 'lecturer', 'lecturer.bob@uni.edu', '$2b$12$fgdvKxRzWP.6lPRmfh.FceK4Zc1SqCT7Fmq1M1AhknmhiLV4aDRP2'), -- bob456
 ('Le Hoang Charlie', 'student', 'student.charlie@uni.edu', '$2b$12$V8KD6ER7kSkntmhCLpopCenqYg/DoxPPMeC670k9/qbsaF7tSgk8W'); -- charlie789
 
-INSERT INTO rooms (name, floor_number, building_id, capacity) VALUES
-('Lab 101', 1, 1, 25),
-('Lecture Room 501', 5, 2, 80),
-('Seminar Room 203', 2, 1, 15);
+INSERT INTO rooms (name, image_url,floor_number, building_id, capacity) VALUES
+('Lab 101','https://pub-e5b45195a0b9403bbc59b58841ffffd9.r2.dev/lab.png', 1, 1, 25),
+('Lecture Room 501', 'https://pub-e5b45195a0b9403bbc59b58841ffffd9.r2.dev/lecture.png', 5, 2, 80),
+('Seminar Room 203','https://pub-e5b45195a0b9403bbc59b58841ffffd9.r2.dev/seminar.png', 2, 1, 15);
 
 INSERT INTO devices (name) VALUES
 ('Projector'),
