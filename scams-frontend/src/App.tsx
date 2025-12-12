@@ -61,10 +61,10 @@ function AppContent() {
       <NetworkStatus />
       {isHighPerf && <ParticleNetwork />}
       <SmartTheme />
-      <PerformanceToggle />
+      {/* <PerformanceToggle /> */}
       {user && <FloatingActionButton actions={quickActions} />}
-      {user && <AIAssistant onBookRoom={handleCreateBooking} />}
-      <RealtimeActivity />
+      {/* {user && <AIAssistant onBookRoom={handleCreateBooking} />} */}
+      {/* <RealtimeActivity /> */}
       <CommandPalette
         commands={commands}
         open={commandPaletteOpen}
