@@ -60,20 +60,20 @@ export function exportBookingsCSV(bookings: Booking[]) {
   downloadCSV(data, 'bookings');
 }
 
-export function exportRoomsCSV(rooms: Room[]) {
-  const data = rooms.map(room => ({
-    'Room ID': room.id,
-    'Name': room.name,
-    'Type': room.type || 'N/A',
-    'Location': room.location,
-    'Floor': room.floor || 'N/A',
-    'Capacity': room.capacity,
-    'Status': room.status || 'available',
-    'Equipment': room.equipment.join('; '),
-  }));
-
-  downloadCSV(data, 'rooms');
-}
+// export function exportRoomsCSV(rooms: Room[]) {
+//   const data = rooms.map(room => ({
+//     'Room ID': room.id,
+//     'Name': room.name,
+//     'Type': room.type || 'N/A',
+//     'Location': room.location,
+//     'Floor': room.floor || 'N/A',
+//     'Capacity': room.capacity,
+//     'Status': room.status || 'available',
+//     'Equipment': room.equipment.join('; '),
+//   }));
+//
+//   downloadCSV(data, 'rooms');
+// }
 
 export function exportUsersCSV(users: User[]) {
   const data = users.map(user => ({

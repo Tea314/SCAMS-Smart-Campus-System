@@ -33,7 +33,7 @@ export function UserManagement({
     const matchesSearch =
       user.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     const matchesDepartment = filterDepartment === 'all' || user.department === filterDepartment;
     const matchesRole = filterRole === 'all' || user.role === filterRole;
 
@@ -70,7 +70,7 @@ export function UserManagement({
             className="pl-10"
           />
         </div>
-        
+
         <Select value={filterDepartment} onValueChange={setFilterDepartment}>
           <SelectTrigger className="w-full sm:w-[180px]">
             <SelectValue placeholder="Department" />
@@ -117,7 +117,7 @@ export function UserManagement({
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.department}</TableCell>
                 <TableCell>
-                  <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>
+                  <Badge variant={user.role === 'lecturer' ? 'default' : 'secondary'}>
                     {user.role}
                   </Badge>
                 </TableCell>
@@ -168,7 +168,7 @@ export function UserManagement({
         <Card className="p-4">
           <p className="text-sm text-muted-foreground">Administrators</p>
           <p className="text-2xl font-bold mt-1">
-            {users.filter((u) => u.role === 'admin').length}
+            {users.filter((u) => u.role === 'lecturer').length}
           </p>
         </Card>
       </div>

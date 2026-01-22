@@ -40,7 +40,7 @@ export function AdminRoutes() {
   } = useAppContext();
   const navigate = useNavigate();
 
-  if (!user || user.role !== "admin") return null;
+  if (!user || user.role !== "lecturer") return null;
 
   const handleNavigate = (view: string) => navigate(`/admin/${view}`);
 

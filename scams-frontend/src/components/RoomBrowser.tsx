@@ -31,9 +31,9 @@ export function RoomBrowser({ rooms, onViewRoom, onToggleFavorite }: RoomBrowser
       const matchesSearch =
         room.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         location.toLowerCase().includes(searchQuery.toLowerCase());
-      
+
       const matchesCapacity = capacityFilter[0] === 0 || room.capacity >= capacityFilter[0];
-      
+
       const matchesEquipment =
         equipmentFilter.length === 0 ||
         equipmentFilter.every((eq) => (room.devices || []).some(d => d.name === eq));
@@ -46,7 +46,6 @@ export function RoomBrowser({ rooms, onViewRoom, onToggleFavorite }: RoomBrowser
       const locationA = `${a.building_name}, Floor ${a.floor_number}`;
       const locationB = `${b.building_name}, Floor ${b.floor_number}`;
       if (sortBy === 'location') return locationA.localeCompare(locationB);
-      // @ts-ignore
       if (sortBy === 'favorites') return (b.isFavorite ? 1 : 0) - (a.isFavorite ? 1 : 0);
       return 0;
     });
@@ -77,7 +76,7 @@ export function RoomBrowser({ rooms, onViewRoom, onToggleFavorite }: RoomBrowser
             className="pl-10"
           />
         </div>
-        
+
         <Select value={sortBy} onValueChange={setSortBy}>
           <SelectTrigger className="w-full sm:w-[180px]">
             <SelectValue placeholder="Sort by" />
@@ -113,7 +112,7 @@ export function RoomBrowser({ rooms, onViewRoom, onToggleFavorite }: RoomBrowser
                   step={2}
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label>Equipment</Label>
                 <div className="flex flex-wrap gap-2">
@@ -181,12 +180,10 @@ export function RoomBrowser({ rooms, onViewRoom, onToggleFavorite }: RoomBrowser
                     className="absolute top-2 right-2 p-2 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-colors"
                   >
                     <Star
-                      className={`h-4 w-4 ${
-                        // @ts-ignore
-                        room.isFavorite
+                      className={`h-4 w-4 ${room.isFavorite
                           ? 'text-yellow-500 fill-yellow-500'
                           : 'text-muted-foreground'
-                      }`}
+                        }`}
                     />
                   </button>
                 </div>

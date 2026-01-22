@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Dialog, DialogContent } from './ui/dialog';
 import { Input } from './ui/input';
-import { 
-  Search, 
-  Calendar, 
-  Home, 
-  Settings, 
-  LogOut, 
+import {
+  Search,
+  Calendar,
+  Home,
+  Settings,
+  LogOut,
   Bell,
   User,
   Building2,
@@ -133,7 +133,7 @@ export function CommandPalette({ commands, open, onClose }: CommandPaletteProps)
                       {cmds.map((cmd, index) => {
                         const globalIndex = filteredCommands.indexOf(cmd);
                         const isSelected = globalIndex === selectedIndex;
-                        
+
                         return (
                           <motion.button
                             key={cmd.id}
@@ -142,11 +142,10 @@ export function CommandPalette({ commands, open, onClose }: CommandPaletteProps)
                               onClose();
                             }}
                             onMouseEnter={() => setSelectedIndex(globalIndex)}
-                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                              isSelected
+                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${isSelected
                                 ? 'bg-primary text-primary-foreground'
                                 : 'hover:bg-muted'
-                            }`}
+                              }`}
                             whileHover={{ x: 4 }}
                             transition={{ duration: 0.15 }}
                           >

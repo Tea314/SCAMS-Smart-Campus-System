@@ -34,21 +34,21 @@ export function RoomManagement({
   const filteredRooms = rooms.filter((room) => {
     const matchesSearch =
       room.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      room.location.toLowerCase().includes(searchQuery.toLowerCase());
-    
+      (room.location || '').toLowerCase().includes(searchQuery.toLowerCase());
+
     const matchesType = filterType === 'all' || room.type === filterType;
     const matchesStatus = filterStatus === 'all' || room.status === filterStatus;
 
     return matchesSearch && matchesType && matchesStatus;
   });
-
-  const getStatusBadge = (status: Room['status']) => {
-    const variants = {
-      available: 'default',
-      booked: 'secondary',
-      maintenance: 'destructive',
-    } as const;
-    return <Badge variant={variants[status || 'available']}>{status}</Badge>;
+  const variants = {
+    available: 'default',
+    booked: 'secondary',
+    maintenance: 'destructive',
+  } as const;
+  type Status = keyof typeof variants;
+  const getStatusBadge = (status: Status) => {
+    return <Badge variant={variants[status ?? 'available']}>{status}</Badge>;
   };
 
   return (
@@ -82,7 +82,7 @@ export function RoomManagement({
                 className="pl-10"
               />
             </div>
-            
+
             <Select value={filterType} onValueChange={setFilterType}>
               <SelectTrigger className="w-full sm:w-[150px]">
                 <SelectValue placeholder="Room Type" />
@@ -133,7 +133,7 @@ export function RoomManagement({
                 <Card key={room.id}>
                   <div className="aspect-video relative overflow-hidden bg-muted">
                     <img
-                      src={room.image}
+                      src={room.image_url}
                       alt={room.name}
                       className="w-full h-full object-cover"
                     />
@@ -147,7 +147,8 @@ export function RoomManagement({
                           {room.location}
                         </CardDescription>
                       </div>
-                      {getStatusBadge(room.status)}
+                      {getStatusBadge('available')}
+                      {/* room.status ||  */}
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-3">
@@ -205,7 +206,8 @@ export function RoomManagement({
                       <TableCell>{room.location}</TableCell>
                       <TableCell>{room.type}</TableCell>
                       <TableCell>{room.capacity}</TableCell>
-                      <TableCell>{getStatusBadge(room.status)}</TableCell>
+                      <TableCell>{getStatusBadge('available')}</TableCell>
+                      {/* room.status */}
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
                           <Button
@@ -262,8 +264,8 @@ export function RoomManagement({
                         item.status === 'in-progress'
                           ? 'default'
                           : item.status === 'completed'
-                          ? 'secondary'
-                          : 'outline'
+                            ? 'secondary'
+                            : 'outline'
                       }
                     >
                       {item.status}

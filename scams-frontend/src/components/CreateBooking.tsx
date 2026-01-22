@@ -41,11 +41,11 @@ export function CreateBooking({ rooms, bookings, onBack, onConfirm, preselectedR
   const [teamMembers, setTeamMembers] = useState('');
 
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [validationError, setValidationError] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null | undefined>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const timeSlots = generateHourlyTimeSlots();
-  const selectedRoom = rooms.find((r) => r.id.toString() === selectedRoomId.toString());
+  const selectedRoom = rooms.find((r) => (r.id || '').toString() === selectedRoomId.toString());
 
   const existingBookingsForDate = useMemo(() => {
     if (!selectedDate || !selectedRoomId) return [];
@@ -207,8 +207,8 @@ export function CreateBooking({ rooms, bookings, onBack, onConfirm, preselectedR
                 {rooms.map((room) => (
                   <div
                     key={room.id}
-                    onClick={() => setSelectedRoomId(room.id.toString())}
-                    className={`group cursor-pointer rounded-lg border-2 p-0 transition-all overflow-hidden relative ${selectedRoomId.toString() === room.id.toString()
+                    onClick={() => setSelectedRoomId((room.id || '').toString())}
+                    className={`group cursor-pointer rounded-lg border-2 p-0 transition-all overflow-hidden relative ${selectedRoomId.toString() === (room.id || '').toString()
                       ? 'border-primary bg-accent ring-2 ring-primary ring-offset-2'
                       : 'border-border hover:border-primary/50'
                       }`}

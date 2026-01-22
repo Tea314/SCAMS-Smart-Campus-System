@@ -13,7 +13,6 @@ import type { Booking, MaintenanceSchedule, Notification, Room, User, Device, Bo
 import {
   exportBookingsCSV,
   exportDepartmentUsageCSV,
-  exportRoomsCSV,
   exportUtilizationCSV
 } from "../utils/exportUtils";
 import { safeStorage } from "../utils/safeStorage";
@@ -437,7 +436,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const newRoom: Room = {
         id: `${Date.now()}`,
         name: roomData.name!,
-        image_url: roomData.image_url || null,
+        image_url: roomData.image_url || '',
         floor_number: roomData.floor_number!,
         building_id: roomData.building_id!,
         building_name: roomData.building_name!,
@@ -557,7 +556,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       exportUtilizationCSV(mockUtilization);
       exportDepartmentUsageCSV(mockDepartmentUsage);
       exportBookingsCSV(bookings);
-      exportRoomsCSV(rooms);
       toast.success("CSV reports downloaded");
     } else {
       toast.info("PDF export feature coming soon");

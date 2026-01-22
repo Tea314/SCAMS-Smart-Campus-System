@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { Room, MaintenanceSchedule } from '@/types';
+import { id } from 'date-fns/locale';
 
 interface MaintenanceDialogProps {
   rooms: Room[];
@@ -24,7 +25,7 @@ export function MaintenanceDialog({ rooms, maintenance, open, onClose, onSave }:
 
   useEffect(() => {
     if (maintenance) {
-      setRoomId(maintenance.roomId);
+      setRoomId((maintenance.roomId).toString());
       setStartDate(maintenance.startDate);
       setEndDate(maintenance.endDate);
       setReason(maintenance.reason);
@@ -43,7 +44,7 @@ export function MaintenanceDialog({ rooms, maintenance, open, onClose, onSave }:
     if (!selectedRoom) return;
 
     const maintenanceData: Partial<MaintenanceSchedule> & { id?: string } = {
-      roomId,
+      roomId: Number(id),
       roomName: selectedRoom.name,
       startDate,
       endDate,
@@ -70,7 +71,7 @@ export function MaintenanceDialog({ rooms, maintenance, open, onClose, onSave }:
             {maintenance ? 'Update maintenance schedule' : 'Schedule room maintenance'}
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="room">Room *</Label>

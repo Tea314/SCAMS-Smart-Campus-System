@@ -282,7 +282,7 @@ export function Overview({
                 <StaggerItem key={room.id}>
                   <motion.div
                     className="group cursor-pointer rounded-lg border bg-card overflow-hidden hover:border-primary transition-colors"
-                    onClick={() => onViewRoom(room.id)}
+                    onClick={() => onViewRoom((room.id || ''))}
                     whileHover={{ y: -4 }}
                     whileTap={{ scale: 0.98 }}
                     transition={{ duration: 0.2 }}

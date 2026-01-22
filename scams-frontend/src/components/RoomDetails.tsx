@@ -55,7 +55,7 @@ export function RoomDetails() {
         setScheduleLoading(true);
         setScheduleError(null);
         const dateString = format(selectedDate, 'yyyy-MM-dd');
-        const schedule = await roomService.getRoomSchedule(room.id, dateString);
+        const schedule = await roomService.getRoomSchedule(Number(room.id || ''), dateString);
         setRoomSchedule(schedule);
       } catch (err) {
         console.error("Failed to fetch room schedule:", err);
@@ -158,7 +158,7 @@ export function RoomDetails() {
               <div>
                 <h4>Equipment & Amenities</h4>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {room.devices.map((device) => (
+                  {(room.devices || []).map((device) => (
                     <Badge key={device.id} variant="outline">
                       {device.name}
                     </Badge>
