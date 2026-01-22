@@ -2,8 +2,8 @@ export interface User {
   id: string;
   full_name: string;
   email: string;
-  department?: string;
-  role: 'lecturer' | 'student';
+  department: string;
+  role: 'student' | 'lecturer';
   status?: 'active' | 'inactive';
   createdAt?: string;
 }
@@ -14,12 +14,18 @@ export interface Device {
 export interface Room {
   id: string;
   name: string;
-  image_url: string | null;
+  image_url: string;
   floor_number: number;
   building_id: number;
   building_name: string;
   capacity: number;
   devices: Device[];
+  status?: string;
+  isFavorite?: boolean;
+  location?: string;
+  type?: string;
+  description?: string;
+  equipment?: string[];
 }
 export interface RoomSchedule {
   room_id: number;

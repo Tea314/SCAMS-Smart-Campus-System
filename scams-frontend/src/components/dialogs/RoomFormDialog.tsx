@@ -31,7 +31,7 @@ const EQUIPMENT_OPTIONS = [
 export function RoomFormDialog({ room, open, onClose, onSave }: RoomFormDialogProps) {
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
-  const [floor, setFloor] = useState('');
+  const [floor, setFloor] = useState(0);
   const [capacity, setCapacity] = useState('');
   const [type, setType] = useState('');
   const [description, setDescription] = useState('');
@@ -41,18 +41,18 @@ export function RoomFormDialog({ room, open, onClose, onSave }: RoomFormDialogPr
   useEffect(() => {
     if (room) {
       setName(room.name);
-      setLocation(room.location);
-      setFloor(room.floor || '');
+      setLocation(room.location || '');
+      setFloor(room.floor_number || 0)
       setCapacity(room.capacity.toString());
       setType(room.type || '');
-      setDescription(room.description);
-      setEquipment(room.equipment);
+      setDescription(room.description || '');
+      setEquipment(room.equipment || []);
       setStatus(room.status || 'available');
     } else {
       // Reset for new room
       setName('');
       setLocation('');
-      setFloor('');
+      setFloor(0);
       setCapacity('');
       setType('');
       setDescription('');
@@ -71,13 +71,12 @@ export function RoomFormDialog({ room, open, onClose, onSave }: RoomFormDialogPr
     const roomData: Partial<Room> & { id?: string } = {
       name,
       location,
-      floor,
       capacity: parseInt(capacity),
       type,
       description,
       equipment,
       status,
-      image: room?.image || 'https://images.unsplash.com/photo-1703355685952-03ed19f70f51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjBtZWV0aW5nJTIwcm9vbXxlbnwxfHx8fDE3NjAzMzc0Njd8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      image_url: room?.image_url || 'https://images.unsplash.com/photo-1703355685952-03ed19f70f51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjBtZWV0aW5nJTIwcm9vbXxlbnwxfHx8fDE3NjAzMzc0Njd8MA&ixlib=rb-4.1.0&q=80&w=1080',
     };
 
     if (room) {
@@ -99,7 +98,7 @@ export function RoomFormDialog({ room, open, onClose, onSave }: RoomFormDialogPr
             {room ? 'Update room details' : 'Create a new meeting room'}
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -141,11 +140,11 @@ export function RoomFormDialog({ room, open, onClose, onSave }: RoomFormDialogPr
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="floor">Floor</Label>
+              <Label htmlFor="floor_number">Floor</Label>
               <Input
                 id="floor"
                 value={floor}
-                onChange={(e) => setFloor(e.target.value)}
+                onChange={(e) => setFloor(Number(e.target.value))}
                 placeholder="5"
               />
             </div>

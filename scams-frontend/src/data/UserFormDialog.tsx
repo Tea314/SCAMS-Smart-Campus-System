@@ -19,21 +19,21 @@ export function UserFormDialog({ user, open, onClose, onSave }: UserFormDialogPr
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [department, setDepartment] = useState('');
-  const [role, setRole] = useState<'employee' | 'admin'>('employee');
+  const [role, setRole] = useState<'lecturer' | 'student'>('student');
   const [status, setStatus] = useState<'active' | 'inactive'>('active');
 
   useEffect(() => {
     if (user) {
       setName(user.full_name);
       setEmail(user.email);
-      setDepartment(user.department);
+      setDepartment(user?.department || '');
       setRole(user.role);
       setStatus(user.status || 'active');
     } else {
       setName('');
       setEmail('');
       setDepartment('');
-      setRole('employee');
+      setRole('student');
       setStatus('active');
     }
   }, [user, open]);
@@ -110,7 +110,7 @@ export function UserFormDialog({ user, open, onClose, onSave }: UserFormDialogPr
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="role">Role</Label>
-              <Select value={role} onValueChange={(v) => setRole(v as 'employee' | 'admin')}>
+              <Select value={role} onValueChange={(v) => setRole(v as 'student' | 'lecturer')}>
                 <SelectTrigger id="role">
                   <SelectValue />
                 </SelectTrigger>

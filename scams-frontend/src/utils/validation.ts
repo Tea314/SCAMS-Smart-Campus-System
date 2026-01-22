@@ -25,7 +25,7 @@ export const validation = {
   },
 
   phone: (phone: string): boolean => {
-    const regex = /^[\d\s\-\+\(\)]+$/;
+    const regex = /^[\d\s\-+()]+$/;
     return regex.test(phone) && phone.replace(/\D/g, '').length >= 10;
   },
 
